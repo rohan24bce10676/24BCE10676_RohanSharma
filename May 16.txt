@@ -1,0 +1,56 @@
+SHOW DATABASES;
+
+CREATE DATABASE VITBhopal1;
+
+DROP DATABASE VITBhopal1;
+
+CREATE DATABASE vitbhopal;
+
+USE vitbhopal;
+
+CREATE TABLE IT (
+    student_id BIGINT,
+    student_name VARCHAR(50),
+    marks INT
+);
+
+CREATE TABLE MECH (
+    student_id BIGINT,
+    student_name VARCHAR(50),
+    marks INT
+);
+
+CREATE TABLE SQLLAB (
+    student_id BIGINT,
+    student_name VARCHAR(50),
+    marks INT
+);
+
+SHOW TABLES FROM vitbhopal;
+
+INSERT INTO IT VALUES
+(111, 'Aditi', 96),
+(112, 'Rohan', 87),
+(113, 'Ishita', 92),
+(114, 'Dev', 83),
+(115, 'Tanvi', 98);
+
+INSERT INTO MECH VALUES
+(211, 'Kunal', 79),
+(212, 'Simran', 85),
+(213, 'Harsh', 90),
+(214, 'Nisha', 88),
+(215, 'Yash', 82);
+
+INSERT INTO SQLLAB VALUES
+(311, 'Varun', 86),
+(312, 'Ritika', 94),
+(313, 'Manoj', 75),
+(314, 'Pallavi', 91),
+(315, 'Deepak', 84);
+
+SELECT  FROM IT;
+SELECT  FROM MECH;
+SELECT  FROM SQLLAB;
+
+INSERT INTO IT VALUES (119, 'Aditi', 97);
