@@ -1,0 +1,124 @@
+USE vitcampus;
+
+CREATE TABLE Persons (
+    ID INT NOT NULL,
+    LastName VARCHAR(255) UNIQUE NOT NULL,
+    FirstName VARCHAR(255) NOT NULL,
+    Age INT
+);
+
+DESC persons;
+
+INSERT INTO persons 
+VALUES (101, 'Sharma', 'Rohan', NULL);
+
+SELECT * FROM persons;
+
+ALTER TABLE Persons
+ADD UNIQUE (Age);
+
+ALTER TABLE Persons
+MODIFY Age INT NOT NULL;
+
+UPDATE persons
+SET Age = 20
+WHERE Age IS NULL;
+
+SELECT * FROM persons;
+
+ALTER TABLE Persons
+ADD PRIMARY KEY (ID);
+
+ALTER TABLE Persons
+DROP PRIMARY KEY;
+
+DROP TABLE persons;
+
+CREATE TABLE Persons (
+    Age INT NOT NULL,
+    CHECK (Age >= 18 AND Age <= 23)
+);
+
+INSERT INTO persons 
+VALUES (21);
+
+SELECT * FROM persons;
+
+DROP TABLE persons;
+
+CREATE TABLE Persons1 (
+    ID INT NOT NULL,
+    LastName VARCHAR(255) NOT NULL,
+    FirstName VARCHAR(255),
+    Age INT,
+    City VARCHAR(255) DEFAULT 'Delhi'
+);
+
+DESC persons1;
+
+INSERT INTO persons1
+VALUES (201, 'Sharma', 'Rohan', 21, DEFAULT);
+
+SELECT * FROM persons1;
+
+CREATE TABLE products (
+    pid INT PRIMARY KEY,
+    pname VARCHAR(100) NOT NULL,
+    prefNo INT NOT NULL UNIQUE
+);
+
+DESC products;
+
+INSERT INTO products 
+VALUES (102, 'Laptop', 19930);
+
+INSERT INTO products 
+VALUES (103, 'Keyboard', 19931);
+
+SELECT * FROM products;
+
+DROP TABLE products;
+
+CREATE TABLE category (
+    cid INT PRIMARY KEY,
+    cname VARCHAR(100) NOT NULL
+);
+
+INSERT INTO category 
+VALUES (101, 'Electronics'),
+       (102, 'Home Appliances'),
+       (103, 'Furniture');
+
+SELECT * FROM category;
+
+CREATE TABLE products (
+    pid INT PRIMARY KEY,
+    pname VARCHAR(100) NOT NULL,
+    cid INT,
+    FOREIGN KEY (cid) REFERENCES category(cid)
+);
+
+DESC products;
+
+INSERT INTO products
+VALUES (504, 'Samsung Power Bank', 101);
+
+INSERT INTO products
+VALUES (505, 'Wooden Table', 103);
+
+SELECT * FROM products;
+
+UPDATE products
+SET pname = 'Gaming Keyboard'
+WHERE pid = 505;
+
+SELECT * FROM products;
+
+DELETE FROM products
+WHERE pid = 504;
+
+SELECT * FROM products;
+
+DROP TABLE products;
+
+DROP TABLE category;
