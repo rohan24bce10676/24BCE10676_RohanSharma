@@ -1,0 +1,50 @@
+show databases
+admin   40.00 KiB
+config  12.00 KiB
+local   88.00 KiB
+show dbs
+admin   40.00 KiB
+config  12.00 KiB
+local   88.00 KiB
+use vit
+switched to db vit
+db
+vit
+db dropDatabase()
+SyntaxError: Missing semicolon. (1:2)
+
+> 1 | db dropDatabase()
+    |   ^
+db.dropDatabase()
+{ ok: 1, dropped: 'vit' }
+show dbs
+admin   40.00 KiB
+config  60.00 KiB
+local   88.00 KiB
+
+use vit
+
+db.createCollection("Student")
+
+show collections
+
+db.Student.drop()
+
+show collections
+
+db.createCollection("Employee")
+
+show databases
+
+db.Employee.insertOne({
+    name: "Rohan Sharma",
+    department: "CSE"
+})
+
+db.Employee.insertOne({
+    name: "X",
+    mark: 95,
+    location: "Bangalore"
+})
+
+db.Employee.find()
