@@ -1,0 +1,130 @@
+db.products.find({
+    price: {
+        $gte: 799
+    }
+}, {
+    name: 1,
+    price: 1
+})
+
+db.products.find({
+    "spec.screen": {
+        $gte: 9.5
+    }
+}, {
+    name: 1,
+    "spec.screen": 1
+})
+
+db.products.find({
+    storage: {
+        $gte: 512
+    }
+}, {
+    name: 1,
+    storage: 1
+})
+
+db.products.find({
+    releaseDate: {
+        $gte: ISODate("2020-05-14")
+    }
+}, {
+    name: 1,
+    releaseDate: 1
+})
+
+db.products.find({
+    price: {
+        $ne: 899
+    }
+}, {
+    name: 1,
+    price: 1
+})
+
+db.products.find({
+    "spec.screen": {
+        $ne: 9.7
+    }
+}, {
+    name: 1,
+    "spec.screen": 1
+})
+
+db.products.find({
+    storage: {
+        $ne: 128
+    }
+}, {
+    name: 1,
+    storage: 1
+})
+
+db.products.find({
+    releaseDate: {
+        $ne: ISODate("2015-01-14")
+    }
+}, {
+    name: 1,
+    releaseDate: 1
+})
+
+db.products.find({
+    price: {
+        $in: [699, 799]
+    }
+}, {
+    name: 1,
+    price: 1
+})
+
+db.products.find({
+    color: {
+        $in: ["black", "white"]
+    }
+}, {
+    name: 1,
+    color: 1
+})
+
+db.products.find({
+    color: {
+        $nin: ["black", "white"]
+    }
+}, {
+    name: 1,
+    color: 1
+})
+
+db.products.find({
+    $and: [
+        { price: 899 },
+        { color: { $in: ["white", "black"] } }
+    ]
+}, {
+    name: 1,
+    price: 1,
+    color: 1
+})
+
+db.products.find({
+    $or: [
+        { price: 799 },
+        { price: 899 }
+    ]
+}, {
+    name: 1,
+    price: 1
+})
+
+db.products.find({
+    $nor: [
+        { price: 899 },
+        { color: "gold" }
+    ]
+}, {
+    name: 1,
+    price: 1,
+    color: 1
+})
