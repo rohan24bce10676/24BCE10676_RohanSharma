@@ -1,0 +1,316 @@
+// Mongo db file 
+
+
+db.StudentDetails.insertMany([
+  {
+    id: 1,
+    name: "Rohan Sharma",
+    department: "CSE",
+    cgpa: 9.1
+  },
+  {
+    id: 2,
+    name: "Gaurav Kakkar",
+    department: "CSE",
+    cgpa: 8.7
+  },
+  {
+    id: 3,
+    name: "Sambhav Trivedi",
+    department: "CSE",
+    cgpa: 7.6
+  }
+])
+
+output :--
+
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('7c3015f24c92318e44329295'),
+    '1': ObjectId('7c3015f24c92318e44329296'),
+    '2': ObjectId('7c3015f24c92318e44329297')
+  }
+}
+
+db.StudentDetails.find()
+
+{
+  _id: ObjectId('7c3015f24c92318e44329295'),
+  id: 1,
+  name: 'Rohan Sharma',
+  department: 'CSE',
+  cgpa: 9.1
+}
+{
+  _id: ObjectId('7c3015f24c92318e44329296'),
+  id: 2,
+  name: 'Gaurav Kakkar',
+  department: 'CSE',
+  cgpa: 8.7
+}
+{
+  _id: ObjectId('7c3015f24c92318e44329297'),
+  id: 3,
+  name: 'Sambhav Trivedi',
+  department: 'CSE',
+  cgpa: 7.6
+}
+
+
+
+
+// eclypps 
+
+
+package mongo;
+
+import com.mongodb.client.*;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import org.bson.Document;
+
+public class MongoDBConnection {
+
+    public static void main(String[] args) {
+
+        // Connect to MongoDB
+        MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+
+        // Access database
+        MongoDatabase database = mongoClient.getDatabase("vitcampus");
+
+        // Access collection
+        MongoCollection<Document> collection =
+                database.getCollection("StudentDetails");
+
+        // ==========================
+        // CREATE (Insert)
+        // ==========================
+        Document student = new Document("id", 37)
+                .append("name", "Rohan Sharma")
+                .append("department", "CSE")
+                .append("cgpa", 9.1);
+
+        collection.insertOne(student);
+        System.out.println("Document Inserted Successfully");
+
+        // ==========================
+        // READ (Find)
+        // ==========================
+        System.out.println("\nStudent Records:");
+
+        FindIterable<Document> students = collection.find();
+
+        for (Document doc : students) {
+            System.out.println(doc.toJson());
+        }
+
+        // ==========================
+        // UPDATE
+        // ==========================
+        collection.updateOne(
+                Filters.eq("id", 37),
+                Updates.set("cgpa", 9.5)
+        );
+
+        System.out.println("\nDocument Updated Successfully");
+
+        // ==========================
+        // READ Updated Record
+        // ==========================
+        Document updatedStudent =
+                collection.find(Filters.eq("id", 37)).first();
+
+        System.out.println("\nUpdated Record:");
+        System.out.println(updatedStudent.toJson());
+
+        // ==========================
+        // DELETE
+        // ==========================
+        collection.deleteOne(Filters.eq("id", 37));
+
+        System.out.println("\nDocument Deleted Successfully");
+
+        // Close connection
+        mongoClient.close();
+    }
+}
+
+
+
+
+output 
+
+
+Jun 03, 2026 6:39:58 PM com.mongodb.diagnostics.logging.JULLogger log
+INFO: Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+Jun 03, 2026 6:39:59 PM com.mongodb.diagnostics.logging.JULLogger log
+INFO: Cluster description not yet available. Waiting for 30000 ms before timing out
+Jun 03, 2026 6:39:59 PM com.mongodb.diagnostics.logging.JULLogger log
+INFO: Opened connection [connectionId{localValue:1, serverValue:36}] to localhost:27017
+Jun 03, 2026 6:39:59 PM com.mongodb.diagnostics.logging.JULLogger log
+INFO: Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[8, 3, 3]}, minWireVersion=0, maxWireVersion=28, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+Jun 03, 2026 6:39:59 PM com.mongodb.diagnostics.logging.JULLogger log
+INFO: Opened connection [connectionId{localValue:2, serverValue:37}] to localhost:27017
+Document Inserted Successfully
+
+Student Records:
+{"_id": {"$oid": "7c3015f24c92318e44329295"}, "id": 1, "name": "Rohan Sharma", "department": "CSE", "cgpa": 9.1}
+{"_id": {"$oid": "7c3015f24c92318e44329296"}, "id": 2, "name": "Gaurav Kakkar", "department": "CSE", "cgpa": 8.7}
+{"_id": {"$oid": "7c3015f24c92318e44329297"}, "id": 3, "name": "Sambhav Trivedi", "department": "CSE", "cgpa": 7.6}
+{"_id": {"$oid": "7c3018b8cee2b88d4c5129d0"}, "id": 37, "name": "Rohan Sharma", "department": "CSE", "cgpa": 9.1}
+
+Document Updated Successfully
+
+Updated Record:
+{"_id": {"$oid": "7c3018b8cee2b88d4c5129d0"}, "id": 37, "name": "Rohan Sharma", "department": "CSE", "cgpa": 9.5}
+
+Document Deleted Successfully
+
+
+
+
+// Code with some edits 
+
+
+package mongo;
+
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
+import org.bson.Document;
+
+public class MongoDBConnection {
+
+    public static void main(String[] args) {
+
+        MongoClient mongoClient = new MongoClient("localhost", 27017);
+
+        MongoDatabase database = mongoClient.getDatabase("vitcampus");
+
+        MongoCollection<Document> collection =
+                database.getCollection("StudentDetails");
+
+        // INSERT MULTIPLE RECORDS
+        collection.insertMany(java.util.Arrays.asList(
+                new Document("rollno", 201)
+                        .append("name", "Rohan Sharma")
+                        .append("branch", "CSE")
+                        .append("cgpa", 9.1),
+
+                new Document("rollno", 202)
+                        .append("name", "Gaurav Kakkar")
+                        .append("branch", "CSE")
+                        .append("cgpa", 8.7),
+
+                new Document("rollno", 203)
+                        .append("name", "Sambhav Trivedi")
+                        .append("branch", "ECE")
+                        .append("cgpa", 7.4)
+        ));
+
+        System.out.println("Records Inserted Successfully");
+
+        // DISPLAY ALL RECORDS
+        System.out.println("\nAll Students:");
+        FindIterable<Document> students = collection.find();
+
+        for (Document doc : students) {
+            System.out.println(doc.toJson());
+        }
+
+        // FIND PARTICULAR STUDENT
+        Document student =
+                collection.find(Filters.eq("rollno", 202)).first();
+
+        System.out.println("\nStudent Found:");
+        System.out.println(student.toJson());
+
+        // UPDATE NAME
+        collection.updateOne(
+                Filters.eq("rollno", 202),
+                Updates.set("name", "Abhay"));
+
+        // UPDATE CGPA
+        collection.updateOne(
+                Filters.eq("rollno", 203),
+                Updates.set("cgpa", 8.1));
+
+        System.out.println("\nRecords Updated");
+
+        // REPLACE COMPLETE DOCUMENT
+        Document newStudent = new Document("rollno", 203)
+                .append("name", "Arpit")
+                .append("branch", "AIML")
+                .append("cgpa", 9.3);
+
+        collection.replaceOne(
+                Filters.eq("rollno", 203),
+                newStudent);
+
+        System.out.println("\nDocument Replaced");
+
+        // DELETE ONE RECORD
+        collection.deleteOne(
+                Filters.eq("rollno", 201));
+
+        System.out.println("\nRecord Deleted");
+
+        // FINAL RECORDS
+        System.out.println("\nRemaining Records:");
+
+        FindIterable<Document> finalStudents =
+                collection.find();
+
+        for (Document doc : finalStudents) {
+            System.out.println(doc.toJson());
+        }
+
+        mongoClient.close();
+    }
+}
+
+
+output 
+
+
+
+Jun 03, 2026 7:12:18 PM com.mongodb.diagnostics.logging.JULLogger log
+INFO: Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+Jun 03, 2026 7:12:18 PM com.mongodb.diagnostics.logging.JULLogger log
+INFO: Cluster description not yet available. Waiting for 30000 ms before timing out
+Jun 03, 2026 7:12:18 PM com.mongodb.diagnostics.logging.JULLogger log
+INFO: Opened connection [connectionId{localValue:1, serverValue:38}] to localhost:27017
+Jun 03, 2026 7:12:18 PM com.mongodb.diagnostics.logging.JULLogger log
+INFO: Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[8, 3, 3]}, minWireVersion=0, maxWireVersion=28, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+Jun 03, 2026 7:12:18 PM com.mongodb.diagnostics.logging.JULLogger log
+INFO: Opened connection [connectionId{localValue:2, serverValue:39}] to localhost:27017
+Records Inserted Successfully
+
+All Students:
+{"_id": {"$oid": "7c3015f24c92318e44329295"}, "id": 1, "name": "Rohan Sharma", "department": "CSE", "cgpa": 9.1}
+{"_id": {"$oid": "7c3015f24c92318e44329296"}, "id": 2, "name": "Gaurav Kakkar", "department": "CSE", "cgpa": 8.7}
+{"_id": {"$oid": "7c3015f24c92318e44329297"}, "id": 3, "name": "Sambhav Trivedi", "department": "CSE", "cgpa": 7.6}
+{"_id": {"$oid": "7c3040b2fed245863ee5f7a5"}, "rollno": 201, "name": "Rohan Sharma", "branch": "CSE", "cgpa": 9.1}
+{"_id": {"$oid": "7c3040b2fed245863ee5f7a6"}, "rollno": 202, "name": "Gaurav Kakkar", "branch": "CSE", "cgpa": 8.7}
+{"_id": {"$oid": "7c3040b2fed245863ee5f7a7"}, "rollno": 203, "name": "Sambhav Trivedi", "branch": "ECE", "cgpa": 7.4}
+
+Student Found:
+{"_id": {"$oid": "7c3040b2fed245863ee5f7a6"}, "rollno": 202, "name": "Gaurav Kakkar", "branch": "CSE", "cgpa": 8.7}
+
+Records Updated
+
+Document Replaced
+
+Record Deleted
+
+Remaining Records:
+{"_id": {"$oid": "7c3015f24c92318e44329295"}, "id": 1, "name": "Rohan Sharma", "department": "CSE", "cgpa": 9.1}
+{"_id": {"$oid": "7c3015f24c92318e44329296"}, "id": 2, "name": "Gaurav Kakkar", "department": "CSE", "cgpa": 8.7}
+{"_id": {"$oid": "7c3015f24c92318e44329297"}, "id": 3, "name": "Sambhav Trivedi", "department": "CSE", "cgpa": 7.6}
+{"_id": {"$oid": "7c3040b2fed245863ee5f7a6"}, "rollno": 202, "name": "Abhay", "branch": "CSE", "cgpa": 8.7}
+{"_id": {"$oid": "7c3040b2fed245863ee5f7a7"}, "rollno": 203, "name": "Arpit", "branch": "AIML", "cgpa": 9.3}
