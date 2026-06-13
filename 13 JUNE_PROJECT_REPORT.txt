@@ -1,0 +1,122 @@
+# Title                                                                                                  									BY
+
+GameVault DB – Digital Games Library Management System                                    									     ~ ROHAN SHARMA
+
+
+# Description
+
+GameVault DB is a MongoDB-based REST API designed to manage a digital games library ecosystem. The system tracks games, developers, publishers, players, game genres,
+player libraries, reviews, and achievements.
+
+The project is built using Node.js, Express.js, and MongoDB and demonstrates CRUD operations, REST API development, database connectivity, and relationship mapping
+(One-to-One, One-to-Many, Many-to-One, and Many-to-Many).
+
+
+# Tools & Technologies
+
++----------------------+-------------------------------+
+| Tool                 | Purpose                       |
++----------------------+-------------------------------+
+| Node.js              | Backend Runtime Environment   |
+| Express.js           | REST API Framework            |
+| MongoDB              | NoSQL Database                |
+| Mongoose             | MongoDB ODM for Node.js       |
+| Postman              | API Testing & Documentation   |
+| dotenv               | Environment Configuration     |
+| nodemon              | Development Auto-Restart      |
+| Mongo Shell(mongosh) | Database Management           |
++----------------------+-------------------------------+
+
+
+# Versions
+
+Run these commands to get the exact versions:
+
+1. node        --  Node.js v20.x.x
+2. npm         --  Version: 10.x.x
+3. express     --  Version: 4.18.x
+4. mongoose    --  Version: 8.x.x
+5. dotenv      --  Version: 16.x.x
+6. nodemon     --  Version: 3.x.x
+7. mongod      --  Version: v8.x.x
+8. mongosh     --  Version: 2.x.x
+
+
+# REST API Modules
+
+1. Game Management                     2. Developer Management
+
+Operations:                            Operations:
+
+POST   /game                           POST   /developer
+GET    /games                          GET    /developers
+GET    /game/:id                       GET    /developer/:id
+PUT    /game/:id                       PUT    /developer/:id
+DELETE /game/:id                       DELETE /developer/:id
+
+Purpose:                               Purpose:
+
+Create Games                           Manage Developer Information
+View Games
+Update Games
+Delete Games
+
+
+3. Publisher Management                4. Genre Management
+
+Operations:                            Operations:
+
+POST   /publisher                      POST   /genre
+GET    /publishers                     GET    /genres
+GET    /publisher/:id                  GET    /genre/:id
+PUT    /publisher/:id                  PUT    /genre/:id
+DELETE /publisher/:id                  DELETE /genre/:id
+
+Purpose:                               Purpose:
+
+Manage Publisher Organizations         Manage Game Genre Categories
+
+
+5. Player Management                   6. Player Library Management
+
+Operations:                            Operations:
+
+POST   /player                         POST   /library
+GET    /players                        GET    /libraries
+GET    /player/:id                     GET    /library/:id
+PUT    /player/:id                     PUT    /library/:id
+DELETE /player/:id                     DELETE /library/:id
+
+Purpose:                               Purpose:
+
+Manage Player Profiles                 Manage Player Game Collections
+
+
+7. Review Management                   8. Achievement Management
+
+Operations:                            Operations:
+
+POST   /review                         POST   /achievement
+GET    /reviews                        GET    /achievements
+GET    /review/:id                     GET    /achievement/:id
+PUT    /review/:id                     PUT    /achievement/:id
+DELETE /review/:id                     DELETE /achievement/:id
+
+Purpose:                               Purpose:
+
+Manage Game Reviews and Ratings        Track In-Game Achievements and Milestones
+
+
+# Relationship Mapping
+
+One-to-One
+Game ↔ Developer (Lead Studio)
+
+One-to-Many
+Publisher → Games
+
+Many-to-One
+Reviews → Game
+
+Many-to-Many
+Players ↔ Games (via Player Library)
